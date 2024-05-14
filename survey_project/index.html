@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <title>Survey Form</title>
+    <link rel="stylesheet" href="styles.css"/>
+  </head>
+  <body>
+    <h1 id="title">My Survey Form</h1>
+    <p id="description">I wrote this short survey for one of the freeCodeCamp projects. I learned all of the html and css from following the freeCodeCamp lessons, and I would recommend it!</p>
+
+    <!-- form begin -->
+    <form id="survey-form">
+      <!-- info fieldset -->
+      <fieldset>
+        <label id="name-label" for="name">Name<input id="name" type="text" placeholder="Joe Schmoe" required/></label>
+        <label id="email-label" for="email">Email<input id="email" type="email" placeholder="example@example.com" required/></label>
+        <label id="number-label" for="number">Favorite Number 0-10<input id="number" type="number" min="0" max="10" placeholder="0" required/></label>
+      </fieldset>
+      <!-- dropdown and radio buttons -->
+      <fieldset>
+        <label for="dropdown">It is currently the: 
+          <select id="dropdown">
+            <option value="">Select an Option</option>
+            <option value="morning">Morning</option>
+            <option value="midday">Midday</option>
+            <option value="afternoon">Afternoon</option>
+            <option value="evening">Evening</option>
+            <option value="night">Night</option>
+            <option value="dawn">Dawn</option>
+          </select>
+          <legend>Cats or Dogs?</legend>
+          <label for="cats"><input id="cats" type="radio" name="pet-type" value="cats" checked/> Cats</label>
+          <label for="dogs"><input id="dogs" type="radio" name="pet-type" value="dogs" />Dogs</label>
+      </fieldset>
+      <!-- checkboxes and textarea -->
+      <fieldset>
+        <legend>Check as many as you want!</legend>
+        <input id="1" type="checkbox" name="checkboxes" value="1"/>
+        <input id="2" type="checkbox" name="checkboxes" value="2"/>
+        <input id="3" type="checkbox" name="checkboxes" value="3"/>
+        <input id="4" type="checkbox" name="checkboxes" value="4"/>
+        <input id="5" type="checkbox" name="checkboxes" value="5"/>
+        <input id="6" type="checkbox" name="checkboxes" value="6"/>
+        <input id="7" type="checkbox" name="checkboxes" value="7"/>
+        <input id="8" type="checkbox" name="checkboxes" value="8"/>
+        <input id="9" type="checkbox" name="checkboxes" value="9"/>
+        <label for="story">Write a short story!
+          <textarea id="story" cols="50" rows="5" placeholder="Once upon a time..."></textarea>
+            </label>
+      </fieldset>
+      <input class="submit-button" id="submit" type="submit" value="Submit Survey"/>
+    </form>
+  </body>
+</html>
