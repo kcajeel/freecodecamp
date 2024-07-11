@@ -1,0 +1,38 @@
+* {
+  font-family: sans-serif;
+  background-color: PapayaWhip;
+  color: #1a1000;
+}
+
+#title {
+  text-align: center;
+  display: flex;
+  justify-content: space-around;
+}
+
+#image {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+
+#img-caption {
+  margin: 10px 0px;
+  font-family: serif;
+  font-weight: bold;
+  text-align: center;
+}
+
+#tribute-info {
+  text-align: center;
+  max-width: 80%;
+  display: block;
+  margin: auto
+}
+
+#about {
+  background-color: #663f00;
+  color: #ffd899;
+}
+
