@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link rel="stylesheet" href="styles.css"/>
+        <title>Benefits of Learning Rust</title>
+    </head>
+    <body>
+        <main id="main-doc">
+            <nav id="navbar">
+                <header>
+                <h1>How Rust Made Me a Better Programmer</h1>
+                </header>
+                <ul>
+                    <li><a class="nav-link" href="#My_Background">My Background</a></li>
+                    <li><a class="nav-link" href="#Rust_Overview">Rust Overview</a></li>
+                    <li><a class="nav-link" href="#Replacing_Null_with_Option">Replacing Null with Option</a></li>
+                    <li><a class="nav-link" href="#Handling_Errors_with_Result">Handling Errors with Result</a></li>
+                    <li><a class="nav-link" href="#Amazing_Tooling">Amazing Tooling</a></li>
+                    <li><a class="nav-link" href="#Amazing_Community">Amazing Community</a></li>
+                </ul>            
+            </nav>
+            <section class="main-section" id="My_Background">
+                <header>My Background</header>
+                <p>As of writing, I am a senior in college studying Computer Science (CS). I've been programming since around 8th grade, and I have experience with C++, Java, Bash, Arduino, C, Python, Racket, Dart/Flutter, Rust, Gleam, HTML/CSS, and JavaScript in that order. I've used a variety of programming language constructs and features, but Rust remains my favorite language by far. </p> 
+            </section>
+            <section class="main-section" id="Rust_Overview">
+                <header>Rust Overview</header>
+                <p>
+                    Rust is a statically-typed multi-paradigm compiled language with a unique memory management model that ensures complete memory safety. It was created to effectively replace C as a systems programming language. Due to the ease of which memory bugs (and vulnerabilities) are introduced with C, Rust has been a welcome addition to may developers' toolboxes. According to the <a href="https://www.tiobe.com/tiobe-index/">TIOBE Index for July 2024</a>, Rust is the 13th most popular programming language in the world. I started learning Rust for its memory safety features, and I continue to use it because I find that Rust is the easiest language for me to develop in. The below sections will delve into more detail about many of Rust's powerful features, but here are a few of my personal highlights: 
+                </p>
+                <ul>
+                    <li>Implicit Typing</li>
+                    <li>Clean Syntax</li>
+                    <li>Exhaustive Pattern Matching</li>
+                    <li>Helpful Developer Tools</li>
+                    <li>Descriptive Compiler Errors</li>
+                </ul>
+                <p>
+                    These are all examples of features that make programming in Rust a breeze. Types are implied -- but statically checked at compile-time to avoid confusion. Syntax like <code>fn foo(bar: i32, baz: i32) -> String {}</code> to declare a function <code>foo</code> that takes 32-bit integer parameters <code>bar</code> and <code>baz</code> to return a <code>String</code> just makes sense. It's easy to read and understand, and the arrow is honestly fun to type.
+                </p>
+                <p>
+                    Rust balances simplistic, intuitive syntax with powerful functionality as well. Take the <code>match</code> keyword, which performs exhaustive pattern-matching on a value. It's similar to the switch-case construct in many other languages, except <code>match</code> <i><strong>must</strong></i> be exhaustive. For example, if you have an Enum of items in a fruit basket and you want to perfrom a different action depending on which item is picked out, you must include each Enum variant for the program to compile: 
+                </p>
+                    <figure>
+                        <pre aria-label="Rust Enum and Match Example">
+                            <code>
+enum Fruit {
+    Apple,
+    Watermelon,
+    Strawberry,
+    Peach,
+    Banana
+}
+
+fn do_something(fruit: Fruit) {
+    // If I didn't have a case for every Fruit variant, 
+    // this code wouldn't compile.
+    match fruit {
+        Fruit::Apple => println!("Apple!"),
+        Fruit::Watermelon => println!("Watermelon!"),
+        Fruit::Strawberry | Fruit::Peach=> {
+            println!("Strawberry or Peach!");
+        },
+        Fruit::Banana => println!("Banana!"),
+    }
+}
+                            </code>
+                        </pre>
+                        <figcaption>
+                            A Rust Enum and a function that uses the Match construct on the Enum's variants
+                        </figcaption>
+                    </figure>
+                    <p>
+                        This means that you have to explicitly handle the cases where values could be empty or Errors. You won't be able to run your code until it's completely safe. Of course, there are ways around this strictness if you just want to quickly prototype something, but this example demonstrates one of the ways in which Rust subtly influences you to write better code. Every outcome must be accounted for, and only then will your code compile. 
+                    </p>
+            </section>
+            <section class="main-section" id="Replacing_Null_with_Option">
+                <header>Replacing Null with Option</header>
+                <p>
+                    In other systems languages like C and C++, and even in Java and JavaScript, the infamous <code>null</code> value is present. Functions may return Null. Values passed can be Null. Even user input passed to a database can be Null if improperly checked. The null value was a mistake to include because the developer must always remember to check for it. It takes one mistake for a potential adversary to exploit the cracks in your software, and it's annoying to contantly check for Nulls! Modern program design using non-nullable values and null safety indicators can get around this, but even modern languages like Dart still have to deal with having Null in the language. 
+                </p>
+                <p>
+                    The Null value serves a purpose however. It indicates that a value is missing where there should be data. It's an important indicator to the system. Rust understands this, but it also understands the frustration of dealing with nullable values and their security implications. The solution? The <code>Option&lt;T&gt;</code> enum. Here is its definition: 
+                </p>
+                <figure>
+                    <pre aria-label="Option Enum Definition">
+                        <code>
+pub enum Option&lt;T&gt; {
+    None,
+    Some(T)    
+}
+                        </code>
+                    </pre>
+                    <figcaption>
+                        The <code>Option&lt;T&gt;</code> enum contains two variants: <code>None</code> and <code>Some(T)</code>
+                    </figcaption>
+                </figure>
+                <p>
+                    This is a really simple idea, but the implications are huge. Remember how Rust forces you to exhaustively match each variant of an Enum? Option is no exception. In cases where a value may or may not exist, Option is the appropriate wrapper for the value's data type. When that value gets processed somewhere else, both the <code>None</code> and the <code>Some</code> variants must be dealt with. That is Rust's solution to the age-old Null problem. Programmers still have a tool to represent nonexistent data, but they also have the obligation to deal with nonexistent data should it occur. I wish more languages used this construct, and I'm surprised that more don't. It's so simple! But it's also super effective. I would like to note that Java does have the <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html">Optional</a> container object, which it has had since Java 8. However, Java also has the Null value so the point is kind of missed there. I was also never taught about the Optional object until quite recently, which makes me worried that it's underused in practice. Rust has no Null though. <code>Option::None</code> is (pun intended) the only option to represend empty values. This allows Rust code to be completely null safe, at very little cost to the developer. 
+                </p>
+            </section>
+            <section class="main-section" id="Handling_Errors_with_Result">
+                <header>Handling Errors with Result</header>
+                <p>
+                    Like the <code>Option&lt;T&gt;</code> enum, there is another enumerated type that is quite present in Rust code: The <code>Result&lt;T, E&gt;</code> type. <code>Result</code> is Rust's answer to error handling. The question "What do we do if what we want to occur doesn't occur?" is an important consideration in program design. C uses numerical error codes, with each number representing a different type of error. Java has an Error and an Exception object, both of which can be "thrown" and "caught" <a href="#footnote-1">[1]</a>. My experience with Racket led me to the <code>Either</code> value, a union of a <code>Left</code> struct and a <code>Right</code> struct, representing an error and a correct value respectively. Rust's Results are most similar to this approach. Here is the enum's definition: 
+                </p>
+                <figure>
+                    <pre aria-label="Result Enum Definition">
+                        <code>
+pub enum Result&lt;T, E&gt; {
+    Ok(T),
+    Err(E)
+}
+                        </code>
+                    </pre>
+                    <figcaption>
+                        The <code>Result&lt;T, E&gt;</code> enum contains two variants: <code>Ok(T)</code> and <code>Err(E)</code>
+                    </figcaption>
+                </figure>
+                <p>
+                    In this way, the programmer can encapsulate errors in the <code>Err(E)</code> variant and correct values in an <code>Ok(T)</code>. In my experience, Results are commonly returned from functions that might experience any exceptional behavior. I think of Errors in Rust to be most similar conceptually to Java's Exceptions: It's not an error with the runtime or underlying system running the code, it's an intentionally marked issue in the program's execution path that <i>should</i> be dealt with. Becuase <code>Result&lt;T, E&gt;</code> is an Enum, it's very easy to pattern match against both variants and quickly deal with any Errors. I don't write about it here, but Error is a type in Rust and you can easily define your own errors. I have done so a few times, usually in a file called <i>error.rs</i> in my GitHub projects.
+                </p>
+            </section>
+            <section class="main-section" id="Amazing_Tooling">
+                <header>Amazing Tooling</header>
+                <p>
+                    Rust has really good out-of-the-box tooling. It comes with the package manager and build tool <code>cargo</code>, which has intuitive syntax and can even be extended by downloading Rust packages (called crates). Cargo: 
+                </p>
+                <ul>
+                    <li>manages your dependencies</li>
+                    <li>creates new projects</li>
+                    <li>publishes your crate to the <a href="https://crates.io">public crate registry</a></li>
+                    <li>compiles your code</li>
+                    <li>runs your code</li>
+                    <li>tests your code</li>
+                    <li>and much more</li>
+                </ul>
+                <p>
+                    It's probably the best builtin tooling I've ever experienced with a language. It takes a lot of the monotonous manual work out of the developer's hands and allows me to be more productive quickly. This is one of the goals of Rust, to enable developers to write safe code as easily as possible. Cargo is incredibly well-executed and it just makes life so much easier. I don't know what else to say about it. 
+                </p>
+            </section>
+            <section class="main-section" id="Amazing_Community">
+                <header>Amazing Community</header>
+                <p>
+                    Rust takes a proactive approach to community development. The official Rust website states: "We are committed to providing a friendly, safe and welcoming environment for all, regardless of gender, sexual orientation, disability, ethnicity, religion, or similar personal characteristic." Furthermore, the actual community fully embodies this promise of inclusivity. My own experiences on Rust forums have been stellar. I once asked for help with a crate and one of the lead contributors replied and helped me sort out my issue. Nobody downplays your questions or picks on you for asking something stupid. It's like the opposite of modern Stack Overflow. The Rust community really just wants to help more people learn this great language. That's it. Nobody cares what demographic you are or even your experience level. Rust is a powerful tool to know and understand, and its community wants to share it with all who are interested. You will be indoctrinated. 
+                </p>
+            </section>
+
+            </section>
+            <p id="footnote-1">
+                Footnote from <a href="#Handling_Errors_with_Result">Handling Errors with Result</a>:<br>
+                Errors vs. Exceptions is out of the scope of this text, but just know that Errors should always crash the program and Exceptions should be "caught" by a try-catch block or else the program will crash. Errors <i>can</i> be caught, but as they usually indicate an isssue with the JVM it's advised to let the program crash during an Error.
+            </p>
+        </main>
+    </body>
+</html>
